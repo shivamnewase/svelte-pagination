@@ -8,6 +8,7 @@
 		results = 0,
 		currentLength = $bindable(10),
 		currentPage = $bindable(1),
+		isLoading = false,
 		onPageChange = null,
 		onPageViewChange = null,
 		leftIcon: LeftIcon = null,
@@ -50,6 +51,7 @@
 	);
 
 	const pageButtons = $derived(buildPages(currentPage, totalPages));
+	const skeletonButtonCount = $derived(pageViewLabel ? 5 : 4);
 
 	$effect(() => {
 		if (currentLength <= 0) {
@@ -103,6 +105,8 @@
 
 <div
 	class="pagination-wrapper"
+	class:is-loading={isLoading}
+	aria-busy={isLoading}
 	style="
 		--active-bg: {finalTheme.activeBgColor};
 		--active-text: {finalTheme.activeTextColor};
@@ -115,77 +119,96 @@
 		--font-size: {finalTheme.fontSize};
 	"
 >
-	{#if results > 0}
-		<span class="records-info">
-			Showing <strong>{startRecord}-{endRecord}</strong> of <strong>{results}</strong>
-		</span>
-	{/if}
-
-	<div class="pagination-box" class:animated={isAnimated} class:hover-shrink={enableHoverShrink}>
-		<button
-			type="button"
-			class="pre"
-			class:string-btn={typeof prev === 'string'}
-			disabled={currentPage <= 1}
-			onclick={() => goToPage(currentPage - 1)}
-			aria-label="Previous page"
-		>
-			{#if LeftIcon}
-				<LeftIcon size={16} />
-			{/if}
-			{#if typeof prev === 'string'}
-				<span>{prev}</span>
-			{:else if !LeftIcon}
-				{'<'}
-			{/if}
-		</button>
-
-		{#each pageButtons as page (page)}
-			{#if page === 'dots-start' || page === 'dots-end'}
-				<button class="pagination_number dots" disabled aria-hidden="true">...</button>
-			{:else}
-				<button
-					type="button"
-					class="pagination_number"
-					class:active={page === currentPage}
-					onclick={() => goToPage(page)}
-					aria-label="Page {page}"
-					aria-current={page === currentPage ? 'page' : undefined}
-				>
-					{page}
-				</button>
-			{/if}
-		{/each}
-
-		<button
-			type="button"
-			class="next"
-			class:string-btn={typeof next === 'string'}
-			disabled={currentPage >= totalPages}
-			onclick={() => goToPage(currentPage + 1)}
-			aria-label="Next page"
-		>
-			{#if typeof next === 'string'}
-				<span>{next}</span>
-			{:else if !RightIcon}
-				{'>'}
-			{/if}
-			{#if RightIcon}
-				<RightIcon size={16} />
-			{/if}
-		</button>
-	</div>
-
-	{#if showPageView}
-		<div class="page-view-selector">
-			<select value={currentLength > 0 ? currentLength : 10} onchange={handlePageViewChange} aria-label="Records per page">
-				{#each pageViewOptions as option}
-					<option value={option}>{option}</option>
+	{#if isLoading}
+		<div class="pagination-skeleton" aria-hidden="true">
+			<div class="skeleton-row skeleton-info"></div>
+			<div class="pagination-box skeleton-controls">
+				<div class="skeleton-pill skeleton-nav"></div>
+				{#each Array.from({ length: skeletonButtonCount }) as _, index}
+					<div class="skeleton-pill skeleton-page" style={`--skeleton-index: ${index}`}></div>
 				{/each}
-			</select>
-			{#if pageViewLabel}
-				<span class="page-view-label">{pageViewLabel}</span>
+				<div class="skeleton-pill skeleton-nav"></div>
+			</div>
+			{#if showPageView}
+				<div class="page-view-selector skeleton-page-view">
+					<div class="skeleton-pill skeleton-select"></div>
+					<div class="skeleton-pill skeleton-label"></div>
+				</div>
 			{/if}
 		</div>
+	{:else}
+		{#if results > 0}
+			<span class="records-info">
+				Showing <strong>{startRecord}-{endRecord}</strong> of <strong>{results}</strong>
+			</span>
+		{/if}
+
+		<div class="pagination-box" class:animated={isAnimated} class:hover-shrink={enableHoverShrink}>
+			<button
+				type="button"
+				class="pre"
+				class:string-btn={typeof prev === 'string'}
+				disabled={currentPage <= 1}
+				onclick={() => goToPage(currentPage - 1)}
+				aria-label="Previous page"
+			>
+				{#if LeftIcon}
+					<LeftIcon size={16} />
+				{/if}
+				{#if typeof prev === 'string'}
+					<span>{prev}</span>
+				{:else if !LeftIcon}
+					{'<'}
+				{/if}
+			</button>
+
+			{#each pageButtons as page (page)}
+				{#if page === 'dots-start' || page === 'dots-end'}
+					<button class="pagination_number dots" disabled aria-hidden="true">...</button>
+				{:else}
+					<button
+						type="button"
+						class="pagination_number"
+						class:active={page === currentPage}
+						onclick={() => goToPage(page)}
+						aria-label="Page {page}"
+						aria-current={page === currentPage ? 'page' : undefined}
+					>
+						{page}
+					</button>
+				{/if}
+			{/each}
+
+			<button
+				type="button"
+				class="next"
+				class:string-btn={typeof next === 'string'}
+				disabled={currentPage >= totalPages}
+				onclick={() => goToPage(currentPage + 1)}
+				aria-label="Next page"
+			>
+				{#if typeof next === 'string'}
+					<span>{next}</span>
+				{:else if !RightIcon}
+					{'>'}
+				{/if}
+				{#if RightIcon}
+					<RightIcon size={16} />
+				{/if}
+			</button>
+		</div>
+
+		{#if showPageView}
+			<div class="page-view-selector">
+				<select value={currentLength > 0 ? currentLength : 10} onchange={handlePageViewChange} aria-label="Records per page">
+					{#each pageViewOptions as option}
+						<option value={option}>{option}</option>
+					{/each}
+				</select>
+				{#if pageViewLabel}
+					<span class="page-view-label">{pageViewLabel}</span>
+				{/if}
+			</div>
+		{/if}
 	{/if}
 </div>

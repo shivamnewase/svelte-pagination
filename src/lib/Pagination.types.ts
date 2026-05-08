@@ -19,6 +19,7 @@ export interface PaginationProps {
 	results?: number;
 	currentLength?: number;
 	currentPage?: number;
+	isLoading?: boolean;
 	onPageChange?: ((page: number) => void) | null;
 	onPageViewChange?: ((pageSize: number) => void) | null;
 	leftIcon?: Component<{ size?: number }> | null;

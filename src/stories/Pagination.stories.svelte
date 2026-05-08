@@ -16,6 +16,7 @@
 			results: 248,
 			currentLength: 10,
 			currentPage: 1,
+			isLoading: false,
 			onPageChange: fn(),
 			onPageViewChange: fn(),
 			prev: null,
@@ -96,5 +97,14 @@
 		next: 'Forward',
 		showPageView: true,
 		pageViewLabel: 'items'
+	}}
+/>
+
+<Story
+	name="Loading Skeleton"
+	args={{
+		isLoading: true,
+		showPageView: true,
+		pageViewLabel: 'items per page'
 	}}
 />

@@ -37,6 +37,18 @@ npm install svelte-pagination
 
 `bind:currentPage` and `onPageChange` can be used together.
 
+## Loading skeleton
+
+Set `isLoading={true}` while you wait for data. The component will render a skeleton version instead of the interactive pagination controls.
+
+```svelte
+<Pagination
+	isLoading={true}
+	results={0}
+	bind:currentPage={page}
+/>
+```
+
 ## Page size selector
 
 ```svelte
@@ -80,6 +92,7 @@ If `prev` or `next` is a string, that label is shown. If `leftIcon` or `rightIco
 | `results`           | `number`                          | `0`                 | Total number of records.                                  |
 | `currentLength`     | `number`                          | `10`                | Current page size. Can be used with `bind:currentLength`. |
 | `currentPage`       | `number`                          | `1`                 | Current page. Can be used with `bind:currentPage`.        |
+| `isLoading`         | `boolean`                         | `false`             | Shows the loading skeleton instead of the controls.       |
 | `onPageChange`      | `(page: number) => void`          | `null`              | Fires when the page changes.                              |
 | `onPageViewChange`  | `(pageSize: number) => void`      | `null`              | Fires when the page size changes.                         |
 | `leftIcon`          | `ComponentType`                   | `null`              | Optional left icon component for the previous button.     |
@@ -138,7 +151,7 @@ type PaginationTheme = {
 
 ## Storybook
 
-The package includes Storybook stories under `src/stories/Pagination.stories.svelte` so you can preview the default, animated, themed, and icon-based variants.
+The package includes Storybook stories under `src/stories/Pagination.stories.svelte` so you can preview the default, animated, themed, icon-based, and loading skeleton variants.
 
 ## Publishing
 
