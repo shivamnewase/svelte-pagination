@@ -6,14 +6,14 @@ A small Svelte pagination component for libraries, dashboards, tables, and data-
 ## Install
 
 ```bash
-npm install svelte-pagination
+npm i svelte-pagination-ui
 ```
 
 ## Import
 
 ```svelte
 <script lang="ts">
-	import Pagination from 'svelte-pagination';
+	import Pagination from 'svelte-pagination-ui';
 </script>
 ```
 
@@ -21,7 +21,7 @@ npm install svelte-pagination
 
 ```svelte
 <script lang="ts">
-	import Pagination from 'svelte-pagination';
+	import Pagination from 'svelte-pagination-ui';
 
 	let page = $state(1);
 </script>
@@ -68,7 +68,7 @@ You can customize the previous and next buttons with text labels or Svelte compo
 
 ```svelte
 <script lang="ts">
-	import Pagination from 'svelte-pagination';
+	import Pagination from 'svelte-pagination-ui';
 	import LeftIcon from './LeftIcon.svelte';
 	import RightIcon from './RightIcon.svelte';
 </script>
@@ -124,37 +124,30 @@ type PaginationTheme = {
 
 ## Visuals
 
-```
-  - Below is Examples that Help to integrate Pagination in your svelte/svelte-kit Code
-  in theme you can use HEX or COLOR CODE directly as per your convinent or your actual Application theme color you can pass
 
-```
 
 - ### Example - 1
-
-  ![Alt text](./static/assets/Pagination-default.png)
+   - Pagination Example without per page these is default theme and default style for pagination component 
+  ![Alt text](./static/assets/Pagination-without-perpage.png)
+  ![Alt text](./static/assets/defaul-without-perpage.JPG)
 
 - ### Example - 2
+
+  ![Alt text](./static/assets/Pagination-default.png)
+  ![Alt text](./static/assets/Pagination-perPage-result.png)
+
+- ### Example - 3
 
   ![Alt text](./static//assets/Pagination-Prem.JPG)
   ![Alt text](./static/assets/Pagination-Premium.JPG)
 
-- ### Example - 3
-
-  ![Alt text](./static/assets/Pagination-Purple1.png)
-  ![Alt text](./static/assets/Pagination-Purple.JPG)
-
 - ### Example - 4
 
-![Alt text](./static/assets/Pagination-perPage.png)
-![Alt text](./static/assets/Pagination-perPage-result.png)
+  ![Alt text](./static/assets/Pagination-purple.JPG)
+  ![Alt text](./static/assets/Pagination-purple-res.JPG)
 
 ## Storybook
 
 The package includes Storybook stories under `src/stories/Pagination.stories.svelte` so you can preview the default, animated, themed, icon-based, and loading skeleton variants.
-
-## Publishing
-
-The component is exported from `src/lib/index.ts`, so it is ready for packaging with `@sveltejs/package` and `npm publish`.
 
 </div>
