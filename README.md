@@ -6,7 +6,7 @@ A small Svelte pagination component for libraries, dashboards, tables, and data-
 ## Install
 
 ```bash
-npm i svelte-pagination-ui
+npm install svelte-pagination-ui
 ```
 
 ## Import
