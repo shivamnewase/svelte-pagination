@@ -62,6 +62,28 @@ Set `isLoading={true}` while you wait for data. The component will render a skel
 />
 ```
 
+## Extra behaviors
+
+```svelte
+<Pagination
+	results={248}
+	bind:currentPage={page}
+	showJumpToPage={true}
+	showProgress={true}
+	compactMode="auto"
+	syncUrl={true}
+	rememberLastPage={true}
+	allowSwipe={true}
+/>
+```
+
+- `showJumpToPage` adds the inline "go to page" control.
+- `showProgress` adds the page summary and progress bar.
+- `compactMode="auto"` collapses to prev/current/next on small screens.
+- `syncUrl` keeps the current page in the query string.
+- `rememberLastPage` restores the last page from `localStorage`.
+- `allowSwipe` enables touch swipe navigation.
+
 ## Icons and labels
 
 You can customize the previous and next buttons with text labels or Svelte components.
@@ -87,25 +109,34 @@ If `prev` or `next` is a string, that label is shown. If `leftIcon` or `rightIco
 
 ## Props
 
-| Prop                | Type                              | Default             | Description                                               |
-| ------------------- | --------------------------------- | ------------------- | --------------------------------------------------------- |
-| `results`           | `number`                          | `0`                 | Total number of records.                                  |
-| `currentLength`     | `number`                          | `10`                | Current page size. Can be used with `bind:currentLength`. |
-| `currentPage`       | `number`                          | `1`                 | Current page. Can be used with `bind:currentPage`.        |
-| `isLoading`         | `boolean`                         | `false`             | Shows the loading skeleton instead of the controls.       |
-| `onPageChange`      | `(page: number) => void`          | `null`              | Fires when the page changes.                              |
-| `onPageViewChange`  | `(pageSize: number) => void`      | `null`              | Fires when the page size changes.                         |
-| `leftIcon`          | `ComponentType`                   | `null`              | Optional left icon component for the previous button.     |
-| `rightIcon`         | `ComponentType`                   | `null`              | Optional right icon component for the next button.        |
-| `prev`              | `string`                          | `null`              | Previous button label.                                    |
-| `next`              | `string`                          | `null`              | Next button label.                                        |
-| `isAnimated`        | `boolean`                         | `false`             | Enables active and button motion.                         |
-| `enableHoverShrink` | `boolean`                         | `false`             | Shrinks page buttons on hover.                            |
-| `activeShape`       | `square` \| `rounded` \| `circle` | `rounded`           | Controls active button shape.                             |
-| `showPageView`      | `boolean`                         | `false`             | Shows the page size selector.                             |
-| `pageViewOptions`   | `number[]`                        | `[10, 20, 50, 100]` | Options shown in the page size selector.                  |
-| `pageViewLabel`     | `string`                          | `''`                | Optional label next to the selector.                      |
-| `theme`             | `PaginationTheme`                 | `{}`                | Theme overrides.                                          |
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `results` | `number` | `0` | Total number of records. |
+| `currentLength` | `number` | `10` | Current page size. Can be used with `bind:currentLength`. |
+| `currentPage` | `number` | `1` | Current page. Can be used with `bind:currentPage`. |
+| `isLoading` | `boolean` | `false` | Shows the loading skeleton instead of the controls. |
+| `onPageChange` | `(page: number) => void` | `null` | Fires when the page changes. |
+| `onPageViewChange` | `(pageSize: number) => void` | `null` | Fires when the page size changes. |
+| `leftIcon` | `ComponentType` | `null` | Optional left icon component for the previous button. |
+| `rightIcon` | `ComponentType` | `null` | Optional right icon component for the next button. |
+| `prev` | `string` | `null` | Previous button label. |
+| `next` | `string` | `null` | Next button label. |
+| `isAnimated` | `boolean` | `false` | Enables active and button motion. |
+| `enableHoverShrink` | `boolean` | `false` | Shrinks page buttons on hover. |
+| `activeShape` | `square` \| `rounded` \| `circle` | `rounded` | Controls active button shape. |
+| `mode` | `pages` \| `infinite` | `pages` | Switches between numbered pagination and load-more mode. |
+| `compactMode` | `auto` \| `always` \| `never` | `auto` | Condenses to prev/current/next on small screens. |
+| `showJumpToPage` | `boolean` | `false` | Shows an inline jump-to-page input. |
+| `showProgress` | `boolean` | `false` | Shows page and record progress with a bar. |
+| `showPageView` | `boolean` | `false` | Shows the page size selector. |
+| `pageViewOptions` | `number[]` | `[10, 20, 50, 100]` | Options shown in the page size selector. |
+| `pageViewLabel` | `string` | `''` | Optional label next to the selector. |
+| `syncUrl` | `boolean \| string` | `false` | Syncs the current page to the URL query string. |
+| `rememberLastPage` | `boolean \| string` | `false` | Restores the last page from `localStorage`. |
+| `allowKeyboardNavigation` | `boolean` | `true` | Enables arrow-key navigation on the wrapper. |
+| `allowSwipe` | `boolean` | `false` | Enables left/right swipe navigation on touch devices. |
+| `loadingPage` | `number \| null` | `null` | Shows a spinner inside the matching page button. |
+| `theme` | `PaginationTheme` | `{}` | Theme overrides. |
 
 ## Theme
 
@@ -120,6 +151,9 @@ type PaginationTheme = {
 	buttonSize?: string;
 	fontSize?: string;
 };
+
+type PaginationMode = 'pages' | 'infinite';
+type PaginationCompactMode = 'auto' | 'always' | 'never';
 ```
 
 ## Visuals
@@ -127,7 +161,7 @@ type PaginationTheme = {
 
 
 - ### Example - 1
-   - Pagination Example without per page these is default theme and default style for pagination component 
+   - Pagination Example without per page these is default theme and default style for pagination component
   ![Alt text](./static/assets/Pagination-without-perpage.png)
   ![Alt text](./static/assets/defaul-without-perpage.JPG)
 
@@ -148,6 +182,6 @@ type PaginationTheme = {
 
 ## Storybook
 
-The package includes Storybook stories under `src/stories/Pagination.stories.svelte` so you can preview the default, animated, themed, icon-based, and loading skeleton variants.
+The package includes Storybook stories under `src/stories/Pagination.stories.svelte` so you can preview the default, animated, themed, icon-based, loading skeleton, and newer opt-in modes.
 
 </div>

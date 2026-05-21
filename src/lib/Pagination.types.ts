@@ -1,6 +1,8 @@
 import type { Component } from 'svelte';
 
 export type PaginationShape = 'square' | 'rounded' | 'circle';
+export type PaginationMode = 'pages' | 'infinite';
+export type PaginationCompactMode = 'auto' | 'always' | 'never';
 
 export type PaginationTheme = Partial<{
 	activeBgColor: string;
@@ -29,8 +31,17 @@ export interface PaginationProps {
 	isAnimated?: boolean;
 	enableHoverShrink?: boolean;
 	activeShape?: PaginationShape;
+	mode?: PaginationMode;
+	compactMode?: PaginationCompactMode;
+	showJumpToPage?: boolean;
+	showProgress?: boolean;
 	showPageView?: boolean;
 	pageViewOptions?: number[];
 	pageViewLabel?: string;
+	syncUrl?: boolean | string;
+	rememberLastPage?: boolean | string;
+	allowKeyboardNavigation?: boolean;
+	allowSwipe?: boolean;
+	loadingPage?: number | null;
 	theme?: PaginationTheme;
 }

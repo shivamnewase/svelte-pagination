@@ -26,9 +26,18 @@
 			isAnimated: false,
 			enableHoverShrink: false,
 			activeShape: 'rounded',
+			mode: 'pages',
+			compactMode: 'auto',
+			showJumpToPage: false,
+			showProgress: false,
 			showPageView: false,
 			pageViewOptions: [10, 20, 50, 100],
 			pageViewLabel: 'per page',
+			syncUrl: false,
+			rememberLastPage: false,
+			allowKeyboardNavigation: true,
+			allowSwipe: false,
+			loadingPage: null,
 			theme: {
 				activeBgColor: '#0f172a',
 				activeTextColor: '#ffffff',
@@ -63,7 +72,34 @@
 		prev: 'Previous',
 		next: 'Next',
 		showPageView: true,
-		pageViewLabel: 'rows'
+		pageViewLabel: 'rows',
+		showJumpToPage: true,
+		showProgress: true,
+		compactMode: 'auto'
+	}}
+/>
+
+<Story
+	name="Infinite Mode"
+	args={{
+		results: 186,
+		currentLength: 15,
+		currentPage: 2,
+		mode: 'infinite',
+		showProgress: true,
+		loadingPage: 3
+	}}
+/>
+
+<Story
+	name="URL Sync and Memory"
+	args={{
+		results: 248,
+		currentLength: 10,
+		currentPage: 1,
+		syncUrl: true,
+		rememberLastPage: true,
+		showJumpToPage: true
 	}}
 />
 
